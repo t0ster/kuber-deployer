@@ -55,6 +55,7 @@ async def write_values_yaml(values):
 
 def get_helm_cmd(command, values_yaml):
     cmd = (
+        f'kubectl create ns {command["namespace"]} || true && '
         f'helm upgrade -i --wait --namespace {command["namespace"]} '
         f'{command["release"]} {command["chart"]}'
     )
@@ -126,6 +127,7 @@ async def helm(request):
                 command["chart"], command.get('path', ''))
         values_yaml = command.get('values') and await write_values_yaml(command['values'])
         # TODO: save cloned repos and then fetch
+        # TODO: strip all bad symbols from input for security
         result = await run_helm(command, values_yaml)
         return web.json_response({"status": "ok", "result": result})
 

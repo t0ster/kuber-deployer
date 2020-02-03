@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: t0ster/kuber-deployer
-  tag: 0.1.5
+  tag: 0.1.6
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

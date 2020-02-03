@@ -29,8 +29,10 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          # command: ["tail"]
-          # args: ["-f", "/dev/null"]
+          {{- if .Values.dev }}
+          command: ["tail"]
+          args: ["-f", "/dev/null"]
+          {{- end }}
           ports:
             - name: http
               containerPort: 80
