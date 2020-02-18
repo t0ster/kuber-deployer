@@ -56,7 +56,8 @@ async def write_values_yaml(values):
 def get_helm_cmd(command, values_yaml):
     cmd = (
         f'kubectl create ns {command["namespace"]} || true && '
-        f'helm upgrade -i --wait --namespace {command["namespace"]} '
+        f'helm upgrade -i --wait --cleanup-on-fail --force '
+        '--namespace {command["namespace"]} '
         f'{command["release"]} {command["chart"]}'
     )
     cmd += values_yaml and f' -f {values_yaml}' or ''
